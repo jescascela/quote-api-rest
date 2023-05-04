@@ -43,4 +43,20 @@ function create(quote) {
 	return {validation};
 }
 
-module.exports = {query, create};
+function deleteQuote(quoteID) {
+	const stmt = db.prepare('DELETE FROM CITACAO WHERE ID = @id');
+	const info = stmt.run({
+		id: quoteID
+	});
+
+	let message = 'Mensagem deletada';
+
+	if(info.changes == 0) {
+		message = 'ID não encontrado';
+		return {message};
+	}
+
+	return {message};
+}
+
+module.exports = {query, create, deleteQuote};

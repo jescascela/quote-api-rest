@@ -15,4 +15,8 @@ router.post('/', function(req, res) {
 	res.send(quoteQuery.create(req.body));
 });
 
+router.delete('/:id', function(req, res) {
+	res.send(quoteQuery.deleteQuote(req.params.id));
+});
+
 module.exports = router;
