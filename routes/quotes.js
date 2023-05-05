@@ -11,8 +11,11 @@ router.get('/:id', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-	// res.send('Método POST chamado com ' + req.body.texto);
 	res.send(quoteQuery.create(req.body));
+});
+
+router.put('/', function(req, res) {
+	res.send(quoteQuery.updateQuote(req.body));
 });
 
 router.delete('/:id', function(req, res) {

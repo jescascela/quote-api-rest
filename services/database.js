@@ -43,6 +43,29 @@ function create(quote) {
 	return {validation};
 }
 
+// This function will be improved later
+function validateUpdate(quote) {
+
+}
+
+function updateQuote(quote) {
+	const stmt = db.prepare('UPDATE CITACAO SET TEXTO = @text, AUTOR = @author WHERE ID = @id');
+	const info = stmt.run({
+		id: quote.id,
+		text: quote.text,
+		author: quote.author
+	});
+
+	let message = 'Registro atualizado com sucesso!';
+
+	if(info.changes == 0) {
+		message = 'Não foi possível atualizar o registro.'
+		return {message};
+	}
+
+	return {message};
+}
+
 function deleteQuote(quoteID) {
 	const stmt = db.prepare('DELETE FROM CITACAO WHERE ID = @id');
 	const info = stmt.run({
@@ -59,4 +82,4 @@ function deleteQuote(quoteID) {
 	return {message};
 }
 
-module.exports = {query, create, deleteQuote};
+module.exports = {query, create, updateQuote, deleteQuote};
