@@ -2,26 +2,26 @@ const sqlite = require('better-sqlite3');
 const db = new sqlite('database.db');
 
 function query(quoteID) {
-	return db.prepare('SELECT TEXTO, AUTOR FROM CITACAO WHERE ID = ?').get(quoteID);
+	stmt = db.prepare('SELECT TEXTO, AUTOR FROM CITACAO WHERE ID = ?').get(quoteID);
+	if(stmt == null) {
+		return {message: "Registro não encontrado"};
+	}
+	return stmt;
 }
 
 function validateCreate(quote) {
 	let alertMessages = [];
 
 	if(Object.keys(quote).length == 0) {
-		alertMessages.push('Nenhum objeto fornecido');
+		alertMessages.push({objeto: "Nenhum objeto fornecido"});
 	}
 
 	if(typeof quote.text == 'undefined') {
-		alertMessages.push('Nenhuma mensagem fornecida');
+		alertMessages.push({texto: "Nenhuma mensagem fornecida"});
 	}
 
 	if(typeof quote.author == 'undefined') {
-		alertMessages.push('Nenhum autor fornecido');
-	}
-
-	if(alertMessages.length > 0) {
-		return alertMessages;
+		alertMessages.push({autor: "Nenhum autor fornecido"});
 	}
 
 	return alertMessages;
@@ -37,10 +37,9 @@ function create(quote) {
 			author: quote.author
 		});
 		let success = 'Mensagem criada com sucesso';
-		return {success};
+		return {message: success, status: 200};
 	}
-
-	return {validation};
+	return {message: validation, status: 400};
 }
 
 // This function will be improved later

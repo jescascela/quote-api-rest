@@ -3,7 +3,7 @@ const router = express.Router();
 const quoteQuery = require('../services/database');
 
 router.get('/', function(req, res) {
-	res.send('Rota funcionando');
+	res.send({mensagem: 'Bem vindo(a)!'});
 });
 
 router.get('/:id', function(req, res) {
@@ -11,7 +11,11 @@ router.get('/:id', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-	res.send(quoteQuery.create(req.body));
+	const quote = quoteQuery.create(req.body);
+	if(quote.status == 200) {
+		return res.send({mensagem: quote.message})
+	}
+	return res.status(quote.status).send({erro: quote.message});
 });
 
 router.put('/', function(req, res) {
