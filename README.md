@@ -20,3 +20,58 @@ CREATE TABLE CITACAO (
 ```
 4. Adicione registros no banco de dados
 5. Na raiz do projeto execute o comando ``node index.js``
+
+## Rotas
+### Retorna uma citação pelo ID
+```HTTP
+GET /frases/:id
+```
+**Retorno**
+```JSON
+{
+ "TEXTO": "string",
+ "AUTOR": "string"
+}
+```
+
+### Salva uma nova citação
+```HTTP
+POST /frases
+```
+**Estrutura JSON**
+```JSON
+{
+ "text": "string",
+ "author": "string"
+}
+```
+
+### Atualiza uma citação
+```HTTP
+PUT /frases
+```
+**Estrutura JSON**
+```JSON
+{
+ "id": ":id",
+ "text": "string",
+ "author": "string"
+}
+```
+**Retorno**
+```JSON
+{
+ "message": "Registro atualizado com sucesso"
+}
+```
+
+### Exclui uma citação
+```HTTP
+DELETE /frases/:id
+```
+**Retorno**
+```JSON
+{
+ "message": "Citação excluída"
+}
+```
